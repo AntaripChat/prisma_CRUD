@@ -1,5 +1,6 @@
 import prismacl from "../config/db.config.js";
 
+//---------create------------
 export const createTodo = async(req,res) =>{
     const {name,todo} = req.body;
     try{
@@ -15,12 +16,15 @@ export const createTodo = async(req,res) =>{
     }
 }
 
+//-------------see all user--------------------------
 export const allTodo = async (req,res) =>{
     const alltodo = await prismacl.todo.findMany();
     // res.send(`name - ${alltodo.name} your task - ${alltodo.todo}`)
     return res.send(alltodo)
 }
 
+
+//----------------task by id------------------------------
 export const findTodo = async(req,res) =>{
     const {id} = req.params;
     try{
@@ -40,6 +44,8 @@ export const findTodo = async(req,res) =>{
     }
 }
 
+
+//---------------update--------------------------
 export const updateTodo = async(req,res)=>{
     const {id} = req.params;
     const {name,todo} = req.body;
@@ -58,3 +64,22 @@ export const updateTodo = async(req,res)=>{
         return res.send(`Some problem`)
     }
 }
+
+
+//---------------------datele task-------------------
+export const deteteTodo = async(req,res)=>{
+    const {id} = req.params;
+    try{
+        await prismacl.todo.delete({
+            where:{
+                id:parseInt(id)
+            },
+        
+        });
+        return res.send(`Task Deleted`);
+    }catch{
+        return res.send(`Some problem`)
+    }
+}
+
+
